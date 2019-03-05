@@ -44,8 +44,7 @@ terms_df = pd.read_csv(TERM_CSV_PATH)
 
 
 terms_ls = terms_df['term_id'].tolist()
-#print(terms_ls)
-#print(len(terms_ls))
+
 
 
 
@@ -60,17 +59,17 @@ except FileNotFoundError:
     #Write the dictionary containing element  in term_ls
 
     TERMS_DICT={term:i for  i,term in enumerate(set(terms_ls))}
-    #print(TERMS_DICT)    
+      
     with open((os.path.join(config.data_path(),"terms",TARGET_DICT)), 'w') as file:
            file.write(json.dumps(TERMS_DICT))
     print("term dictionary has been written in txt file")
 
         
-#print(TERMS_DICT) 
+
 
 
 NO_CLASSES=len(TERMS_DICT)
-#print("number of classes :",NO_CLASSES)
+
 
 
 ####AMINO ACID 
@@ -81,7 +80,7 @@ NO_CLASSES=len(TERMS_DICT)
 
 with open((os.path.join(config.data_path(),"terms",AMINO_ACID_CHR_TO_INT_FILE)), 'r') as file:
     data=json.load(file)
-    #TERMS_DICT=data['exDict']
+    
     AMINO_ACID_CHR_TO_INT_DICT = data
 
 
@@ -116,20 +115,11 @@ def prepare_target_vector(existin_labels,all_target_dict):
     target_vector=[0]*length_targets
     
     label_list=find_intersection(existin_labels)
-    #print("ancestors are ")
-    #print(label_list)
+ 
     for label in label_list:
 
         target_vector[all_target_dict.get(label)]=1
-##        
-####        try:
-####            target_vector[all_target_dict.get(label)]=1
-####        except IndexError:
-####            #obsolete_tirms.append(label)
-####            pass
-####        except TypeError:
-####            #obsolete_tirms.append(label)
-####            pass
+#
             
     return target_vector 
 
@@ -190,7 +180,7 @@ def prepare_batch(index_list):
     #use prepare_one_sample
 
     #return np array of protein seq and np array of associated labels
-    #sample_list=[DATA.loc[i,['labels','seq']] for i in index_list]
+    
     seq_arrays=[]
     target_arrays=[]
     for i in index_list:
@@ -246,7 +236,7 @@ def get_all_sample():
         s,t=prepare_one_sample(one_row)
         seq_arrays.append(s)
         target_arrays.append(t)
-    #seq_arrays,target_arrays=[prepare_one_sample(one_row) for one_row in sample_list]
+    
     return np.array(seq_arrays),np.array(target_arrays)    
 
 
@@ -292,27 +282,6 @@ def check_any_nan(data_frmae,specific_column) :
 
 #print(get_all_index())
 
-
-
-
-
-'''
-
-#Aggregate Data
-print("start aggregating Data")
-print("Before aggregating,total Number of Rows :",len(DATA.index))
-
-DATA= preprocess_data_set(DATA)
-
-DATA.to_csv(os.path.join(config.data_path(),GO_TYPE,SAMPLE_CSV_FILE),sep=",")
-
-print(" Data frame has been aggregated")
-print("After aggregating,total Number of Rows :",len(DATA.index))
-print(DATA.columns)
-
-'''
-
-"""
 
 ####################### TEST#####
 
