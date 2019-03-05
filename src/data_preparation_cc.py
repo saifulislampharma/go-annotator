@@ -37,8 +37,7 @@ terms_df = pd.read_csv(TERM_CSV_PATH)
 
 
 terms_ls = terms_df['term_id'].tolist()
-#print(terms_ls)
-#print(len(terms_ls))
+
 
 
 
@@ -56,14 +55,13 @@ with open((os.path.join(config.data_path(),"terms",TARGET_DICT)), 'w') as file:
 #load target_dictionary
 with open((os.path.join(config.data_path(),"terms",TARGET_DICT)), 'r') as file:
     data=json.load(file)
-    #TERMS_DICT=data['exDict']
+    
     TERMS_DICT=data
         
-#print(TERMS_DICT) 
 
 
 NO_CLASSES=len(TERMS_DICT)
-#print(NO_CLASSES)
+
 
 
 ####AMINO ACID 
@@ -74,7 +72,7 @@ NO_CLASSES=len(TERMS_DICT)
 
 with open((os.path.join(config.data_path(),"terms",AMINO_ACID_CHR_TO_INT_FILE)), 'r') as file:
     data=json.load(file)
-    #TERMS_DICT=data['exDict']
+    
     AMINO_ACID_CHR_TO_INT_DICT = data
 
 
@@ -109,21 +107,11 @@ def prepare_target_vector(existin_labels,all_target_dict):
     target_vector=[0]*length_targets
     
     label_list=find_intersection(existin_labels)
-    #print("ancestors are ")
-    #print(label_list)
+    ]
     for label in label_list:
 
         target_vector[all_target_dict.get(label)]=1
-##        
-####        try:
-####            target_vector[all_target_dict.get(label)]=1
-####        except IndexError:
-####            #obsolete_tirms.append(label)
-####            pass
-####        except TypeError:
-####            #obsolete_tirms.append(label)
-####            pass
-            
+        ]
     return target_vector 
 
 
@@ -146,7 +134,7 @@ def prepare_one_sample(one_row):
     #convert seq into index
      seq_index=[int(AMINO_ACID_CHR_TO_INT_DICT.get(c)) for c in seq]
      leng=len(seq_index)
-     #print(type(seq_index[1]))
+    ]
 
      #PADDING OR TRIMMING
      if leng<CUT_POINT:
@@ -183,7 +171,7 @@ def prepare_batch(index_list):
     #use prepare_one_sample
 
     #return np array of protein seq and np array of associated labels
-    #sample_list=[DATA.loc[i,['labels','seq']] for i in index_list]
+    ]
     seq_arrays=[]
     target_arrays=[]
     for i in index_list:
@@ -198,7 +186,7 @@ def prepare_batch(index_list):
         except KeyError:
             pass
         
-    #seq_arrays,target_arrays=[prepare_one_sample(one_row) for one_row in sample_list]
+        ]
     return np.array(seq_arrays),np.array(target_arrays)
 
 
@@ -239,7 +227,7 @@ def get_all_sample():
         s,t=prepare_one_sample(one_row)
         seq_arrays.append(s)
         target_arrays.append(t)
-    #seq_arrays,target_arrays=[prepare_one_sample(one_row) for one_row in sample_list]
+        ]
     return np.array(seq_arrays),np.array(target_arrays)    
 
 
@@ -276,12 +264,7 @@ def preprocess_data_set(old_df):
 
 #print(get_all_index())
 
-'''
-#Aggregate Data
-DATA= preprocess_data_set(DATA)
 
-DATA.to_csv(os.path.join(config.data_path(),GO_TYPE,SAMPLE_CSV_FILE),sep=",")
-'''
 
 
 """
