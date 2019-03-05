@@ -1,5 +1,5 @@
 This is the code for paper ‘DEEPGONET: Multi-label prediction of go annotation for 
-protein from sequence using cascaded convolutional and recurrent network’.
+protein from sequence using cascaded convolutional and recurrent network’. https://doi.org/10.1109/ICCITECHN.2018.8631921
 
 
 In this project we developed cascaded convolutional network to predict top level hierarchy
