@@ -15,8 +15,7 @@ CUT_POINT=1000
 TERM_PATH_BP=os.path.join(config.data_path(),"terms","bp_term_3rd.csv")
 bb_terms_df=pd.read_csv(TERM_PATH_BP)
 bp_terms=bb_terms_df['term_id'].tolist()
-#print(bp_terms)
-#print(len(bp_terms))
+
 
 bp_terms_dict={}
 bp_terms_dict={term:i for  i,term in enumerate(set(bp_terms))} 
@@ -29,8 +28,7 @@ a_code=amino_df['code'].tolist()
 
 #dic to convert letter to int
 int_frm_letter={key:(value+1) for value,key in enumerate(a_code)}
-#print(int_frm_letter)
-#dict int to letter
+
 letter_frm_int={(value+1):key for value,key in enumerate(a_code)}
 
 
@@ -53,15 +51,7 @@ def prepare_target_vector(existin_labels,all_target_dict):
     for label in label_list:
 
         target_vector[all_target_dict.get(label)]=1
-##        
-####        try:
-####            target_vector[all_target_dict.get(label)]=1
-####        except IndexError:
-####            #obsolete_tirms.append(label)
-####            pass
-####        except TypeError:
-####            #obsolete_tirms.append(label)
-####            pass
+
             
     return target_vector 
 
@@ -122,7 +112,7 @@ def prepare_batch(index_list):
     #use prepare_one_sample
 
     #return np array of protein seq and np array of associated labels
-    #sample_list=[bp_db.loc[i,['labels','seq']] for i in index_list]
+    
     seq_arrays=[]
     target_arrays=[]
     for i in index_list:
@@ -133,7 +123,7 @@ def prepare_batch(index_list):
         s,t=prepare_one_sample(one_row)
         seq_arrays.append(s)
         target_arrays.append(t)
-    #seq_arrays,target_arrays=[prepare_one_sample(one_row) for one_row in sample_list]
+    
     return np.array(seq_arrays),np.array(target_arrays)
 
 
@@ -170,8 +160,7 @@ bp_db=pd.read_csv(BP_DATA_PATH)
 one_row=bp_db.loc[100525,['labels','seq']]
 print(one_row['seq'])
 print(one_row['labels'])
-#term_list=one_row['labels']
-#find_intersection(term_list)
+
 s,t=prepare_one_sample(one_row)
 print(s)
 print(t.shape)
