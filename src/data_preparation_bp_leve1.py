@@ -23,13 +23,7 @@ GO_TYPE="BP"
 TERM_PATH_BP=os.path.join(config.data_path(),"terms",TARGET_CSV_FILE)
 bb_terms_df=pd.read_csv(TERM_PATH_BP)
 bp_terms=bb_terms_df['term_id'].tolist()
-###print(bp_terms)
-###print(len(bp_terms))
-##
-##
-##
-##bp_terms_dict={}
-##bp_terms_dict={term:i for  i,term in enumerate(set(bp_terms))}
+
 
 '''
 exDict = {'exDict': bp_terms_dict}
@@ -45,7 +39,7 @@ with open((os.path.join(config.data_path(),"terms",'bp_first_level.txt')), 'r') 
               
 
 NO_CLASSES=len(bp_terms_dict)
-#print(NO_CLASSES)
+
 
 
 #AMINO ACID 
@@ -55,8 +49,7 @@ a_code=amino_df['code'].tolist()
 
 #dic to convert letter to int
 int_frm_letter={key:(value+1) for value,key in enumerate(a_code)}
-#print(int_frm_letter)
-#dict int to letter
+
 letter_frm_int={(value+1):key for value,key in enumerate(a_code)}
 
 ########################################################## UTILITY FUNCTIONS########
@@ -87,21 +80,11 @@ def prepare_target_vector(existin_labels,all_target_dict):
     target_vector=[0]*length_targets
     
     label_list=find_intersection(existin_labels)
-    #print("ancestors are ")
-    #print(label_list)
+
     for label in label_list:
 
         target_vector[all_target_dict.get(label)]=1
-##        
-####        try:
-####            target_vector[all_target_dict.get(label)]=1
-####        except IndexError:
-####            #obsolete_tirms.append(label)
-####            pass
-####        except TypeError:
-####            #obsolete_tirms.append(label)
-####            pass
-            
+
     return target_vector 
 
 
@@ -124,7 +107,7 @@ def prepare_one_sample(one_row):
     #convert seq into index
      seq_index=[int(int_frm_letter.get(c)) for c in seq]
      leng=len(seq_index)
-     #print(type(seq_index[1]))
+     
 
      #PADDING OR TRIMMING
      if leng<CUT_POINT:
@@ -176,7 +159,7 @@ def prepare_batch(index_list):
         except KeyError:
             pass
         
-    #seq_arrays,target_arrays=[prepare_one_sample(one_row) for one_row in sample_list]
+   
     return np.array(seq_arrays),np.array(target_arrays)
 
 
@@ -256,13 +239,7 @@ def preprocess_data_set(old_df):
 #BP CATEGORY
 
 
-'''
-bp_db= preprocess_data_set(bp_db)
 
-bp_db.to_csv(os.path.join(config.data_path(),GO_TYPE,SAMPLE_CSV_FILE),sep=",")
-'''
-#print("data_preparation_bp_leve1 is executed")
-#print(bp_db.columns)
 ####################### TEST#####
 
 
