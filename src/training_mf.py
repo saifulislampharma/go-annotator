@@ -30,7 +30,7 @@ class BPSequence(Sequence):
     
     def __getitem__(self, idx):
         batch_index = self.index_list[idx * self.batch_size:(idx + 1) * self.batch_size]
-        #target_index = self.y[idx * self.batch_size:(idx + 1) * self.batch_size]
+        
         
         X,Y = data_preparations.prepare_batch(batch_index)
 
@@ -40,7 +40,7 @@ class BPSequence(Sequence):
 
 ##########################################test
 
-#X,Y=data_preparations.get_all_sample()
+
 
    
 #get all recods number
@@ -49,7 +49,7 @@ all_records = data_preparations.get_all_index()
 
 #prepare list
 all_index=[i for i in range(all_records)]
-#print(all_index)
+
 
 No = len(all_index)
 
@@ -57,9 +57,7 @@ No = len(all_index)
 shuffle(all_index)
 
 
-####### pilot batch 100 train ,100 test
-#batch_train = all_index[0:100]
-#batch_validation=all_index[100:200]
+
 
 #for training
 no_train = int(np.ceil(No * 0.9))
@@ -67,9 +65,7 @@ print('number of training samples',no_train)
 
 
 index_train = all_index[0:no_train]
-##print(len(index_train))
-#index_train=math.ceil(
-#print(len(index_train))
+
 
 #for validation
 remaining = No-no_train
@@ -78,39 +74,7 @@ print('number of validation samples',no_validation)
 
 index_validation = all_index[no_train:(no_train + no_validation)]
 
-'''
-#print(len(index_validation))
 
-
-
-#for test
-#no_test=remaining-no_validation
-#index_test=all_index[(no_train+no_validation):No]
-#print(len(index_test))
-##X,Y=data_preparation.prepare_batch(index_train)
-##
-##print(X.shape)
-##print(Y.shape)
-
-
-##print(len(index_validation))
-##print(len(index_test))
-
-
-#train_gen=BPSequence(index_train, BATCH_SIZE)
-#val_gen=BPSequence(index_validation, BATCH_SIZE)
-##x,y=train_gen. __getitem__(1)
-##print(x.shape)
-##print(y.shape)
-#print(train_gen.__len__())
-'''
-
-'''
-for i in range(10):
-    x, y = train_gen.__getitem__(i+1)  
-    print("train shape:", x.shape)
-    print("label shape: ", y.shape)
-'''
 
 #build model and compile
 
@@ -123,39 +87,18 @@ steps_train=int(len(index_train) // BATCH_SIZE)
 steps_val=int(len(index_validation) // BATCH_SIZE)
 
 
-"""
 
-###print(steps_val)
-for i in range(steps_train):
-   x,y=train_gen.__getitem__(i)
-    
-   print(x.shape)
-   print(y.shape)
-
-
-
-##print("training sample generation complete")
-###print(steps_val)
-for i in range(steps_val):
-    
-    x,y=val_gen.__getitem__(i)
-    print(x.shape)    
-    print(y.shape)
-
-
-
-"""
 model=model.build_model()
 #model.load_weights(os.path.join(config.weight_path(),model_utils.MODEL_WEIGHT))
 
-#sgd = SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
+
 optimizer = Adam(lr=1e-5)
 loss=losses.loss
 model.compile(optimizer=optimizer,
               loss=loss,
               metrics=['accuracy', custom_metrics.f1_keras,custom_metrics.matthews_correlation])
 
-#model.summary()
+
 print("complete model compiling")
 #CALBACKS
 history = model_utils.LossHistory()
@@ -177,13 +120,8 @@ history = model.fit_generator(train_gen,
                             validation_steps=steps_val,
                             verbose = 2)
 
-'''
-history=model.fit(x=X,
-                  y=Y,
-                  batch_size=BATCH_SIZE,
-                  epochs=epochs,
-                  validation_split=0.2,
-                  callbacks=[history,model_cp,reduce_lr])
-'''
+
+
+
 #saving
 model_utils.save_model(model,model_utils.MODEL_NAME,model_utils.MODEL_WEIGHT)
